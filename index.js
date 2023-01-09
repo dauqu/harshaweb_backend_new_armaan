@@ -5,7 +5,6 @@ const PORT = 4000;
 const multer = require("multer");
 const cookieParser = require("cookie-parser");
 
-
 const fs = require("fs");
 
 const webSocketServer = require("websocket").server;
@@ -35,6 +34,7 @@ const allowedOrigins = [
   "https://vs-panel-website.vercel.app",
   "http://192.168.1.100:3000",
   "http://192.168.1.102:3000",
+  "https://harshaweb.com",
 ];
 
 app.use(
@@ -92,7 +92,7 @@ app.use("/api/contact", require("./routes/contact"));
 //request quote
 app.use("/api/request_quote", require("./routes/request_quote"));
 
-//review\
+//review
 app.use("/api/review", require("./routes/review"));
 
 //website request
@@ -100,7 +100,6 @@ app.use("/api/website_request", require("./routes/web_req"));
 
 //app request
 app.use("/api/app_request", require("./routes/app_req"));
-
 
 
 

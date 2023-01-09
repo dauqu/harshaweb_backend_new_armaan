@@ -4,6 +4,18 @@ const quoteSchema= require("../models/request_quote");
 
 //add a request quote
 router.post("/", async(req,res) =>{
+const {name, email}= req.body;
+//check if email is valid
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+if (!emailRegex.test(email))
+  return res.status(400).json({ message: "Email is not valid" });
+  
+  
+      //check if name is valid
+      const nameRegex = /^[a-zA-Z ]{2,30}$/;
+      if(!nameRegex.test(name)) return res.status(400).json({message:"Name is not valid"});
+     
+
     const quote_collection= new quoteSchema({
         name:req.body.name,
         email:req.body.email,

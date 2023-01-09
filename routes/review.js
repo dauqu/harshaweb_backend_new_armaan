@@ -6,18 +6,26 @@ const jwt = require("jsonwebtoken");
 
 //add a review
 router.post("/", async(req,res) =>{
-    const token= req.cookies.auth_token || req.body.token || req.headers["x-auth-token"];
-   if(token === undefined || token === null || token === ""){
-         return res.status(401).json("You are not authorized"); 
-    }
-    const have_valid_token= jwt.verify(token, process.env.JWT_SECRET);
+
+const {name, email}= req.body;
+   //check if email is valid
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+if (!emailRegex.test(email))
+  return res.status(400).json({ message: "Email is not valid" });
+ 
+  
+      //check if name is valid
+      const nameRegex = /^[a-zA-Z ]{2,30}$/;
+      if(!nameRegex.test(name)) return res.status(400).json({message:"Name is not valid"});
+      
 
 
     const review_collection= new reviewSchema({
-        userid: have_valid_token.id,
+       
         name:req.body.name,
         email:req.body.email,
         review:req.body.review, 
+        rating:req.body.rating,
     });
     try {
         await review_collection.save();
@@ -51,9 +59,7 @@ router.get("/:id", async(req,res) =>{
 router.patch("/:id", async(req,res) =>{
     const review_collection= await reviewSchema.findByIdAndUpdate(req.params.id, req.body);
     try {
-        
         res.status(200).json("Review updated");
-        
     } catch (error) {
         res.status(400).send(error);
     }

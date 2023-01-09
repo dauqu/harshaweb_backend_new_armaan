@@ -5,6 +5,24 @@ const upload_app = require("../file_upload_app");
 
 //post upload file
 router.post("/", upload_app.single("file"), async (req, res) => {
+
+    const {name, email, phoneNumber} = req.body;
+
+    //check if email is valid
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailRegex.test(email))
+      return res.status(400).json({ message: "Email is not valid" });
+      
+  
+    //check if phone number is valid const phoneRegex = /^\d{10}$/;
+       const phoneRegex = /^\d{10}$/;
+      if(!phoneRegex.test(phoneNumber)) return res.status(400).json({message:"Phone number must be 10 digits long"});
+      
+  
+       //check if name is valid
+       const nameRegex = /^[a-zA-Z ]{2,30}$/;
+       if(!nameRegex.test(name)) return res.status(400).json({message:"Name is not valid"});
+
     try {
         const url = req.protocol + "://" + req.get("host") + "/" + req.file.filename;
         const post_file = new app_req({

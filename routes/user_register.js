@@ -42,7 +42,7 @@ router.patch("/update/:id", async (req, res) => {
 });
 
 // create user
-router.post("/",   async (req, res) => {
+router.post("/",SignupValidation,   async (req, res) => {
   console.log(req.body);
 
   // hashing password
@@ -70,8 +70,8 @@ router.post("/",   async (req, res) => {
 // middleware for register user validation
 async function SignupValidation(req, res, next) {
   // check if user exist
-  const user = await Admin.findOne({ email: req.body.email });
-  if (user)
+  const user_exist = await user.findOne({ email: req.body.email });
+  if (user_exist)
     return res
       .status(400)
       .json({ message: "User already exists", status: "error" });

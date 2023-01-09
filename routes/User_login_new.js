@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
         // const hash_psw = admin_collection.password;
         // console.log(admin_collection.password)
         
-         const valid_password =bcrypt.compare(password, admin_collection.password);
+         const valid_password =await bcrypt.compare(password, admin_collection.password);
          
          if(!valid_password)
             return res.status(400).json({ message: "  passord is wrong ", status: "warning" });
@@ -40,13 +40,6 @@ router.post("/", async (req, res) => {
             secure: true,
         })
 
-        // // set localstorage 
-        // res.locals.admin = {
-        //     id: admin._id,
-        //     email: admin.email,
-        // };
-        res.setHeader("x-auth-token", token);
-        res.cookie("auth_token", token);
 
         res.status(200).json({ message: "login success", status: "success", token: token });
 
