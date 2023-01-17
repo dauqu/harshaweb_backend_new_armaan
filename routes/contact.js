@@ -3,6 +3,7 @@ const router = express.Router();
 const contactSchema = require("../models/contact");
 
 //add contact user
+<<<<<<< HEAD
 router.post("/", async(req,res) =>{
 
     const {fname, lname, email, phone}= req.body;
@@ -26,6 +27,9 @@ router.post("/", async(req,res) =>{
      if(!lnameRegex.test(lname)) return res.status(400).json({message:"Name is not valid"});
      
 
+=======
+router.post("/",validation, async(req,res) =>{
+>>>>>>> b200c10cc9deb07c1decb36b3db4f1ae5f1eb866
     const contact_collection= new contactSchema({
         fname:req.body.fname,
         lname:req.body.lname,
@@ -63,5 +67,17 @@ router.get("/", async(req,res) =>{
         res.status
     }
 });
+
+//validation for contact user
+async function validation (req,res, next){
+    const { fname, email,phone, message }= req.body;
+    if(fname === undefined || fname === null || fname === "" ||
+    email === undefined || email === null || email === "" ||
+    phone === undefined || phone === null || phone === "" ||
+    message === undefined || message === null || message === ""){
+        return res.status(400).json("Firstname, email, phone, message  is required");
+    }
+    next();
+}
 
 module.exports= router;

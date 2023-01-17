@@ -101,6 +101,17 @@ app.use("/api/website_request", require("./routes/web_req"));
 //app request
 app.use("/api/app_request", require("./routes/app_req"));
 
+//payment gateway
+app.use("/api/payment_gateway_app", require("./routes/payment_gateway_app"));
+
+//payment gateway
+app.use("/api/payment_gateway_web", require("./routes/payment_gateway_web"));
+
+//payment id and status
+app.use("/api/payment_id_status_app", require("./routes/payment_id_status_app"));
+
+//payment id and status
+app.use("/api/payment_id_status_web", require("./routes/payment_id_status_web"));
 
 
 // vendor signup
