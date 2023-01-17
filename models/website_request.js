@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const web_reqSchema= new mongoose.Schema({
+    req_id:{
+        type:String,
+        unique:true,
+    },
     url:{
         type:String,
     },
@@ -31,6 +35,15 @@ const web_reqSchema= new mongoose.Schema({
         type:String,
     },
     numberOfPages:{
+        type:String,
+    },
+    paymentid:{
+        type:String,
+    },
+    payment_gateway:{
+        type:String,
+    },
+    payment_status:{
         type:String,
     },
 },{timestamps:true});
